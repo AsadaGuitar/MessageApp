@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+</head>
+<body>
+こんにちは、<span th:text="${userAccount.fullName}"></span>　さん。
+<br>
+
+<h3>フレンド</h3>
+
+<div th:each="friend : ${friendsList}">
+	<span th:text="${friend.friendsId}"></span> : 
+	<!-- 括弧内でパスの変数を代入 -->
+	<a th:href="@{/home/friends/{friendsId}(friendsId =${friend.friendsId})}">
+		<span  th:text="${friend.friendsName}" ></span>
+	</a>
+</div>
+
+
+<h3>フレンドメッセージ</h3>
+
+<div th:each="friendMessage : ${friendsMessages}">
+	ID : <span th:text="${friendMessage.fromUser}"></span>:
+	<span th:text="${friendMessage.fromName}"></span>:
+	<span th:text="${friendMessage.comment}"></span>
+</div>
+
+<h3>フレンド追加</h3>
+<form th:action="@{/home/friendsPost}" th:method="post">
+	<label>お友達 : 
+		<input type="text" name="id"/>
+	</label>
+	<button type="submit">送信</button>
+</form>
+
+
+
+
+
+
+<h3>全てのメッセージ</h3><br>
+<div th:each="message : ${messageList}">
+	ID <span th:text="${message.fromUser}"></span> : 
+	<span th:text="${message.fromName}"></span> : <span th:text="${message.comment}"></span> : 
+	<span th:text="${message.date}"></span>
+</div>
+
+<h3>メッセージを送る</h3>
+
+<form th:action="@{/home/messagePost}" 
+	th:object="${messageForm}" th:method="post">
+	
+	<label>ID : 
+		<input type="text" name="toUser"/>
+	</label><br>
+	<p>コメント :</p>
+	<textarea rows="5" cols="33" th:field="*{comment}"></textarea>
+	<br>
+	<button type="submit">送信</button>
+	
+</form>
+
+<br>
+
+
+</body>
+</html>
