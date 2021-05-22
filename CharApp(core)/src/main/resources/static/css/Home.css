@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#header{
+	height: 30px;
+	display:flex;
+}
+#main-display{
+	display:flex;
+}
+.contents{
+	width:300px;
+	height:200px;
+	margin:60px;
+}
+.add-friend{
+	width:300px;
+	height:100px;
+	margin-top:200px;
+}

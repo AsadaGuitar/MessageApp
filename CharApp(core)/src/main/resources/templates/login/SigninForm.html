@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Signin</title>
+</head>
+<body>
+
+<h2>ログインフォーム</h2>
+
+<form th:action="@{/authenticate}"  th:method="post">
+
+	<label>ID ：　
+	<input type="text" name="username" />
+	</label><br/>
+	
+	<label>パスワード : 
+	<input type="password"  name="password" />
+	</label>
+	<br>
+	<span style="color : red;" th:if="${error}">ID、もしくはパスワードが違います。</span>
+	<br>
+	<button type="submit">送信</button>
+
+</form>
+</body>
+</html>

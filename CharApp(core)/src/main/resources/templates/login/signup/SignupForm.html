@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Signup</title>
+</head>
+<body>
+
+<h2>新規登録</h2>
+
+<form th:action="@{/signup}" 
+	th:object="${accountForm}"
+	th:method="post">
+	
+	<!-- クラス単位で付与された相関Validationのメッセージ -->
+	<p style="color:red;" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+	
+	<label>姓（ふりがな)
+		<input type="text" th:field="*{lastNameF}"/>
+		<br>
+		<span style="color:red;" th:if="${#fields.hasErrors('lastNameF')}"  th:errors="*{lastNameF}">lastNameF is error</span>
+	</label>
+	<br/>
+	<label>名（ふりがな)
+		<input type="text" th:field="*{firstNameF}"/>
+		<br>
+		<span style="color:red;" th:if="${#fields.hasErrors('firstNameF')}"  th:errors="*{firstNameF}">firstNameF is error</span>
+	</label>
+	<br/>
+	<label>姓（漢字)
+		<input type="text" th:field="*{lastName}"/>
+		<br>
+		<span style="color:red;" th:if="${#fields.hasErrors('lastName')}"  th:errors="*{lastName}">lastName is error</span>
+	</label>
+	<br/>
+	<label>名（漢字)
+		<input type="text" th:field="*{firstName}"/>
+		<br>
+		<span  style="color:red;"th:if="${#fields.hasErrors('firstName')}"  th:errors="*{firstName}">firstName is error</span>
+	</label>
+	<br/>
+	
+	<label for="age">年齢:
+    <select id="age" name="age" th:field="*{age}">
+         <option value=0 selected>選択してください</option>
+	    <option th:each="i : ${#numbers.sequence(0, 100)}" 
+			 th:value="${i}" th:text="${i}" th:selected="${i==age}">歳
+		</option>
+    </select>
+    <span style="color:red;" th:if="${#fields.hasErrors('age')}"  th:errors="*{age}">age is error</span>
+    </label>
+    <br/>
+    
+    性別:
+	<div id="genderForm" th:each="genderType : ${T(com.example.domain.enums.Gender).values()}">
+		<input type="radio" th:id="${{genderType}}" th:field="*{gender}" th:value="${{genderType}}">
+		<label th:for="${{genderType}}"  th:text="${{genderType.japanese}}">Elem Types</label>		
+	</div>
+	<span style="color:red;" th:if="${#fields.hasErrors('gender')}"  th:errors="*{gender}">gender is error</span>
+	<br/>
+	
+	現職:
+	<div id="incumbentForm" th:each="incumbentType : ${T(com.example.domain.enums.Educational).values()}">
+		<input type="radio" th:id="${{incumbentType}}" th:field="*{incumbent}" th:value="${{incumbentType}}">
+		<label th:for="${{incumbentType}}"  th:text="${{incumbentType.viewName}}">Elem Types</label>		
+	</div>
+	<span style="color:red;" th:if="${#fields.hasErrors('incumbent')}"  th:errors="*{incumbent}">incumbent is error</span>
+	<br/>
+	
+	<label for="education">最終学歴:
+    <select id="education" name="education" th:field="*{education}">
+	    <option th:value="${T(com.example.domain.enums.Educational).Junior}" 
+	    		th:text="${T(com.example.domain.enums.Educational).Junior.viewName}"/>
+	    <option th:value="${T(com.example.domain.enums.Educational).High}" 
+	    		th:text="${T(com.example.domain.enums.Educational).High.viewName}"/>
+	    <option th:value="${T(com.example.domain.enums.Educational).College}" 
+	    		th:text="${T(com.example.domain.enums.Educational).College.viewName}"/>
+    </select>
+    <span style="color:red;" th:if="${#fields.hasErrors('education')}"  th:errors="*{education}">education is error</span>
+    </label>
+    <br/>
+	
+	
+	<label>メールアドレス:
+		<input type="text" th:field="*{mail}"/>
+		<br>
+		<span style="color:red;" th:if="${#fields.hasErrors('mail')}"  th:errors="*{mail}">mail is error</span>
+	</label>
+	<br/>
+	
+	<label>パスワード : 
+		<input type="password" th:field="*{password}"/>
+		<br>
+		<span style="color:red;" th:if="${#fields.hasErrors('password')}"  th:errors="*{password}">password is error</span>
+	</label><br/>
+		
+	<label>確認用 : 
+		<input type="password" th:field="*{rePassword}"/>
+		<br>
+		<span style="color:red;" th:if="${#fields.hasErrors('rePassword')}"  th:errors="*{rePassword}">rePassword is error</span>
+	</label><br/>
+	
+	
+	<button type="submit">送信</button>
+	
+</form>
+</body>
+</html>
